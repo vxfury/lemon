@@ -1,0 +1,35 @@
+
+
+if(tool == "vcxproj") {
+  platforms = { "Win32", "x64" }
+}
+
+buildDir = "Build/$(configuration)/.$(target)"
+
+targets = {
+
+  LockFreeQueue = cppApplication + {
+    dependencies = { "libnstd" }
+    includePaths = { "Ext/libnstd/include" }
+    libPaths = { "Build/$(configuration)/.libnstd" }
+    libs = { "nstd" }
+    root = "Src"
+    files = {
+      "*.cpp" = cppSource
+      "*.h"
+    }
+    if tool == "vcxproj" {
+      linkFlags += { "/SUBSYSTEM:CONSOLE" }
+    }
+    if platform == "Linux" {
+      libs += { "pthread", "rt" }
+      cppFlags += { "-std=c++11" }
+    }
+    defines -= "NDEBUG"
+  }
+  
+  include "Ext/libnstd/libnstd.mare"
+  libnstd += {
+    folder = "Ext"
+  }
+}

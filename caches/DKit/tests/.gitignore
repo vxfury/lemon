@@ -1,0 +1,14 @@
+*.bak
+*.dSYM
+*.swp
+atomic
+cqueue
+linkedFIFO
+mpsc_fifo
+receiver
+sender
+spmc_fifo
+spsc_fifo
+pool
+trie
+udp_receiver
